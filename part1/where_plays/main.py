@@ -29,13 +29,18 @@
 import sqlite3
 import prettytable
 
-con = sqlite3.connect("../netflix.db")
-cur = con.cursor()
-sqlite_query = ("")  # TODO измените код запроса
-result = cur.execute(sqlite_query)
+with sqlite3.connect('../netflix.db') as connection:
+    cursor = connection.cursor()
+    sqlite_query = ("""
+    
+    SELECT title FROM netflix
+    WHERE netflix.cast LIKE '%Renée%'
 
+    """)
+    result = cursor.execute(sqlite_query)
 # не удаляйте код дальше, он нужен для вывода результата
 # запроса в красивом формате
+
 
 mytable = prettytable.from_db_cursor(result)
 mytable.max_width = 30

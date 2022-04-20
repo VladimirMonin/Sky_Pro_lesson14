@@ -20,18 +20,25 @@
 # listed_in — список жанров и подборок
 # description — краткое описание
 # -----------------------
+
 import sqlite3
 
-con = sqlite3.connect("../netflix.db")
-cur = con.cursor()
-sqlite_query = ("")  # TODO измените код запроса
-cur.execute(sqlite_query)
-executed_query = cur.fetchall()
+with sqlite3.connect('../netflix.db') as connection:
+    cursor = connection.cursor()
+    sqlite_query = ("""
+        SELECT title from netflix
+        order by date_added 
+        DESC 
+        LIMIT 5
+    """)
+    result = cursor.execute(sqlite_query)
+
 
 # TODO Результат запроса сохраните в переменной result
 # для последующей выдачи в требуемом формате
 
-result = ""
+result = cursor.fetchall()
 
 if __name__ == '__main__':
-    print(result)
+    for title in result:
+        print(*title)
